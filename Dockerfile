@@ -1,0 +1,15 @@
+FROM node:18-alpine
+WORKDIR /app
+COPY . . 
+
+RUN yarn install
+
+ARG OPENAI_SECRET 
+ENV OPENAI_SECRET $OPENAI_SECRET
+
+ARG PORT
+ENV PORT $PORT
+
+EXPOSE 80
+
+CMD ["yarn", "start"]

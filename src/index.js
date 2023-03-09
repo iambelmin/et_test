@@ -1,9 +1,12 @@
 import express from 'express'
+import cors from 'cors'
 import dotenv from 'dotenv'
-import { routes } from './routes/index.js'
 
+import { routes } from './routes/index.js'
 dotenv.config()
+
 const app = express()
+const PORT = process.env.PORT || 3030;
 
 const handleAsyncError = (handler) => {
   return async (req, res, next) => {
@@ -16,6 +19,8 @@ const handleAsyncError = (handler) => {
   }
 }
 
+app.use(cors())
+
 for (const [routeName, routeController] of Object.entries(routes)) {
   if (routeController.get) {
     app.get(`/${routeName}`, handleAsyncError(routeController.get))
@@ -26,6 +31,6 @@ app.use((error, _req, res, _next) => {
   res.status(500).send(`[ERROR] ${error.message}`)
 })
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000')
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
 })
