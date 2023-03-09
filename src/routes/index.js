@@ -1,6 +1,5 @@
-import * as productImage from './productImage.js';
+import * as productImage from './productImage.js'
 
 export const routes = {
-    "generate-image": productImage,
+  'generate-image': productImage,
 }
-

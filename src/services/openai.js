@@ -13,6 +13,12 @@ class OpenAIClass {
     this.openai = new OpenAIApi(openAiConfig)
   }
 
+  static getInstance(secret) {
+    if (!this.instance) this.instance = new OpenAIClass(OPENAI_SECRET)
+
+    return this.instance
+  }
+
   async generateImage(product, size = '256x256') {
     if (!this.isSizeValid(size)) throw new Error('Bad size provided, please use 256x256, 512x512 or 1024x1024')
 
@@ -32,8 +38,8 @@ class OpenAIClass {
   isSizeValid(size) {
     if (size == '256x256' || size == '512x512' || size == '1024x1024') return true
 
-    return false   
+    return false
   }
 }
 
-export const OpenAIWrapper = new OpenAIClass(OPENAI_SECRET)
+export const OpenAIWrapper = OpenAIClass.getInstance(OPENAI_SECRET)

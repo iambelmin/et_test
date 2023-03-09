@@ -17,11 +17,14 @@ const handleAsyncError = (handler) => {
 }
 
 for (const [routeName, routeController] of Object.entries(routes)) {
-    if(routeController.get) {
-        app.get(`/${routeName}`, handleAsyncError(routeController.get));
-    }
+  if (routeController.get) {
+    app.get(`/${routeName}`, handleAsyncError(routeController.get))
+  }
 }
 
+app.use((error, _req, res, _next) => {
+  res.status(500).send(`[ERROR] ${error.message}`)
+})
 
 app.listen(3000, () => {
   console.log('Listening on port 3000')
